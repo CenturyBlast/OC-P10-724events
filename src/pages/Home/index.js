@@ -14,7 +14,7 @@ import Modal from "../../containers/Modal";
 import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
-  const {last} = useData();
+  const { last } = useData();
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   return <>
     <header>
@@ -120,8 +120,8 @@ const Page = () => {
       <div className="col presta">
         <h3>Notre dernière prestation</h3>
         <EventCard
-          imageSrc={last?.cover}
-          title={last?.title}
+          imageSrc={last && last.cover ? last.cover : "https://images.pexels.com/photos/2774556/pexels-photo-2774556.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"}
+          title={last && last.title ? last.title : "Événement récent"}
           date={new Date(last?.date)}
           small
           label="boom"

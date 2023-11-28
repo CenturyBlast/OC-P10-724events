@@ -13,9 +13,11 @@ const EventList = () => {
   const { data, error } = useData();
   const [type, setType] = useState();
   const [currentPage, setCurrentPage] = useState(1);
+
+  // condition was bad : !type instead of type, and no filter on event type
   const filteredEvents = (
-    (!type
-      ? data?.events
+    (type
+      ? data?.events.filter(event => event.type === type)
       : data?.events) || []
   ).filter((event, index) => {
     if (
@@ -46,6 +48,7 @@ const EventList = () => {
           />
           <div id="events" className="ListContainer">
             {filteredEvents.map((event) => (
+            
               <Modal key={event.id} Content={<ModalEvent event={event} />}>
                 {({ setIsOpened }) => (
                   <EventCard

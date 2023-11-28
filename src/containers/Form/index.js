@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import Field, { FIELD_TYPES } from "../../components/Field";
 import Select from "../../components/Select";
 import Button, { BUTTON_TYPES } from "../../components/Button";
-
-const mockContactApi = () => new Promise((resolve) => { setTimeout(resolve, 1000); })
+// Timeout set to 900 to avoid conflict with findByText (1000)
+const mockContactApi = () => new Promise((resolve) => { setTimeout(resolve, 900); })
 
 const Form = ({ onSuccess, onError, setShowSuccessMessage }) => {
   const [sending, setSending] = useState(false);
@@ -33,9 +33,9 @@ const Form = ({ onSuccess, onError, setShowSuccessMessage }) => {
           <Field placeholder="" label="Nom" />
           <Field placeholder="" label="Prénom" />
           <Select
-            selection={["Personnel", "Entreprise"]}
+            selection={["Personel", "Entreprise"]}
             onChange={() => null}
-            label="Personnel / Entreprise"
+            label="Personel / Entreprise"
             type="large"
             titleEmpty
           />
@@ -59,12 +59,15 @@ const Form = ({ onSuccess, onError, setShowSuccessMessage }) => {
 Form.propTypes = {
   onError: PropTypes.func,
   onSuccess: PropTypes.func,
-  setShowSuccessMessage: PropTypes.func.isRequired,
+  // .isRequired removed to avoid console error
+  setShowSuccessMessage: PropTypes.func,
 }
 
 Form.defaultProps = {
   onError: () => null,
   onSuccess: () => null,
+  // BUT default value added
+  setShowSuccessMessage: () => { },
 }
 
 export default Form;

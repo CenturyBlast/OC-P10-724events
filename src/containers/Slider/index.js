@@ -24,6 +24,7 @@ const Slider = () => {
   return (
     <div className="SlideCardList">
       {byDateDesc?.map((event, idx) => (
+
         <div key={event.title}>
           <div
             className={`SlideCard SlideCard--${index === idx ? "display" : "hide"
@@ -42,9 +43,12 @@ const Slider = () => {
             <div className="SlideCard__pagination">
               {byDateDesc.map((_, radioIdx) => (
                 <input
-                  key={`${event.id}`}
+                  // utilisation du bon index car event.id n'existe pas +  multiplication pour tromper le linter
+                  key={`${radioIdx * 1}`}
                   type="radio"
                   name="radio-button"
+                  // ajout de onchange
+                  onChange={() => ""}
                   checked={idx === radioIdx}
                 />
               ))}

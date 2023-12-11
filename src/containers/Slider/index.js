@@ -8,19 +8,32 @@ const Slider = () => {
   const { data } = useData();
   const [index, setIndex] = useState(0);
   const byDateDesc = data?.focus.sort((evtA, evtB) =>
-    new Date(evtA.date) < new Date(evtB.date) ? -1 : 1
+    new Date(evtA.date) > new Date(evtB.date) ? -1 : 1
   );
+
+  let timeoutId;
+
+  const handleDotClick = (newIndex) => {
+    setIndex(newIndex);
+  };
+
   const nextCard = () => {
     if (byDateDesc) {
-      setTimeout(
+      timeoutId = setTimeout(
         () => setIndex((index + 1) % byDateDesc.length),
         5000
       );
     }
   };
+
   useEffect(() => {
     nextCard();
-  });
+    return () => {
+      // Effacer le timeout lors du démontage du composant
+      clearTimeout(timeoutId);
+    };
+  }, [index, byDateDesc]);
+
   return (
     <div className="SlideCardList">
       {byDateDesc?.map((event, idx) => (
@@ -48,8 +61,8 @@ const Slider = () => {
                   type="radio"
                   name="radio-button"
                   // ajout de onchange
-                  onChange={() => ""}
-                  checked={idx === radioIdx}
+                  onChange={() => handleDotClick(radioIdx)}
+                  checked={index === radioIdx}
                 />
               ))}
             </div>
